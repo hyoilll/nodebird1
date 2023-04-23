@@ -2,6 +2,8 @@ import { Button, Form, Input } from "antd";
 import Link from "next/link";
 import { useCallback, useState } from "react";
 import styled from "styled-components";
+import PropTypes from "prop-types";
+import useInput from "../hooks/useInput";
 
 const ButtonWrapper = styled.div`
   margin-top: 10px;
@@ -12,18 +14,22 @@ const FormWrapper = styled(Form)`
 `;
 
 const LoginForm = ({ setIsLoggedIn }) => {
-  const [id, setId] = useState("");
-  const [pw, setPw] = useState("");
+  // const [id, setId] = useState("");
+  // const [pw, setPw] = useState("");
 
-  //useMemo：値cache
-  //useCallback：コンポネントにPropsとして渡す関数はuseCallbackを使うことで最適化される、関数cache
-  const onChangeId = useCallback((e) => {
-    setId(e.target.value);
-  }, []);
+  // //useMemo：値cache
+  // //useCallback：コンポネントにPropsとして渡す関数はuseCallbackを使うことで最適化される、関数cache
+  // const onChangeId = useCallback((e) => {
+  //   setId(e.target.value);
+  // }, []);
 
-  const onChangePw = useCallback((e) => {
-    setPw(e.target.value);
-  }, []);
+  // const onChangePw = useCallback((e) => {
+  //   setPw(e.target.value);
+  // }, []);
+
+  //custom hooks➞重複削除
+  const [id, onChangeId] = useInput("");
+  const [pw, onChangePw] = useInput("");
 
   const onSubmitForm = useCallback(() => {
     console.log(id, pw);
@@ -71,6 +77,10 @@ const LoginForm = ({ setIsLoggedIn }) => {
       </FormWrapper>
     </>
   );
+};
+
+LoginForm.propTypes = {
+  setIsLoggedIn: PropTypes.func.isRequired,
 };
 
 export default LoginForm;

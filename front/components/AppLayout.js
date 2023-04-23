@@ -56,6 +56,7 @@ const AppLayout = ({ children, title }) => {
           {children}
         </Col>
         <Col xs={24} sm={6} md={6}>
+          {/* referrerとopener情報が渡されたらセキュリティ的に危ないので、防ぐ */}
           <a
             href="https://blog.naver.com/dlgydlf12345"
             target="_blank"
