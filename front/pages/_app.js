@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 //import "antd/dist/antd.css";
 import Head from "next/head";
-import { wrapper } from "../store/configureStore";
+import wrapper from "../store/configureStore";
 
 // Component : pagesの各ファイルのreturn componentが入る、全てのページで共通しているもの
 // AppLayout : 特定のcomponentだけが共通しているもの

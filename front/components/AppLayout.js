@@ -2,8 +2,8 @@ import PropTypes from "prop-types";
 import Link from "next/link";
 import { Menu, Input, Row, Col } from "antd";
 import Head from "next/head";
-import { useState } from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import UserProfile from "../components/UserProfile";
 import LoginForm from "../components/LoginForm";
@@ -13,7 +13,7 @@ const SearchInput = styled(Input.Search)`
 `;
 
 const AppLayout = ({ children, title }) => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   const onSearch = (value) => console.log(value);
 
@@ -46,11 +46,7 @@ const AppLayout = ({ children, title }) => {
       <Row gutter={8}>
         {/* xs:mobile(>=576px), sm:tablet(>=576px), md:desktop(>=768px) */}
         <Col xs={24} sm={6} md={6}>
-          {isLoggedIn ? (
-            <UserProfile setIsLoggedIn={setIsLoggedIn} />
-          ) : (
-            <LoginForm setIsLoggedIn={setIsLoggedIn} />
-          )}
+          {isLoggedIn ? <UserProfile /> : <LoginForm />}
         </Col>
         <Col xs={24} sm={12} md={12}>
           {children}
