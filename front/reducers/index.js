@@ -1,15 +1,12 @@
 import { HYDRATE } from "next-redux-wrapper";
+import { combineReducers } from "redux"; //関数を合わせる
+
+import user from "./user";
+import post from "./post";
 
 const initialState = {
-  user: {
-    isLoggedIn: false,
-    user: null,
-    signUpData: {},
-    loginData: {},
-  },
-  post: {
-    mainPosts: [],
-  },
+  user: {},
+  post: {},
 };
 
 //action creator -> dynamic action creator
@@ -20,48 +17,22 @@ const initialState = {
 //   };
 // };
 
-export const loginAction = (data) => {
-  return {
-    type: "LOG_IN",
-    data,
-  };
-};
-
-export const logoutAction = () => {
-  return {
-    type: "LOG_OUT",
-  };
-};
-
 // (prev state, action) => next state
-const rootReducer = (state = initialState, action) => {
-  switch (action.type) {
-    case HYDRATE:
-      return {
-        ...state,
-        ...action.payload,
-      };
-    case "LOG_IN":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: true,
-          user: action.data,
-        },
-      };
-    case "LOG_OUT":
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLoggedIn: false,
-          user: null,
-        },
-      };
-    default:
-      return state;
-  }
-};
+const rootReducer = combineReducers({
+  // server side rendringのためindexを追加する
+  index: (state = {}, action) => {
+    switch (action.type) {
+      case HYDRATE:
+        return {
+          ...state,
+          ...action.payload,
+        };
+      default:
+        return state;
+    }
+  },
+  user,
+  post,
+});
 
 export default rootReducer;
